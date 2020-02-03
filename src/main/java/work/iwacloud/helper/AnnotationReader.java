@@ -1,6 +1,5 @@
 package work.iwacloud.helper;
 
-import work.iwacloud.enums.SysMessages;
 import org.hibernate.AnnotationException;
 
 import javax.persistence.Column;
@@ -28,9 +27,6 @@ public class AnnotationReader {
             }
         }
 
-        if(columnAnnotation.isEmpty()){
-            throw new AnnotationException(SysMessages.ANNOTATION_NOTFOUND.value());
-        }
         return columnAnnotation;
     }
 

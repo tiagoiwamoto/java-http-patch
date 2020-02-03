@@ -1,5 +1,6 @@
 package work.iwacloud.helper;
 
+import org.hibernate.AnnotationException;
 import work.iwacloud.springdatahelper.enums.StatusMessages;
 import work.iwacloud.springdatahelper.objects.DataTransfer;
 import work.iwacloud.springdatahelper.objects.DbColumn;
@@ -27,6 +28,9 @@ public class PartialUpdateHelper<T> {
         LinkedList<DbColumn> querys = new LinkedList<>();
         Class addressClass = obj.getClass();
         Field[] valueObjFields = addressClass.getDeclaredFields();
+        if(obj == null){
+            throw new Exception("Object is empty");
+        }
         for (int line = 0; line < valueObjFields.length; line++) {
 
             valueObjFields[line].setAccessible(true);
@@ -42,6 +46,8 @@ public class PartialUpdateHelper<T> {
                 if(value != null){
                     querys.add(new DbColumn(columnAnnotation, value));
                 }
+            }catch (AnnotationException e){
+                throw new AnnotationException(e.getMessage());
             }catch (Exception e){
                 throw new Exception(e.getMessage());
             }
